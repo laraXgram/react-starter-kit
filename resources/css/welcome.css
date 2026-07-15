@@ -1,0 +1,112 @@
+:root {
+    --ink: #0a0d13; --surface: #10141d; --surface-2: #141926;
+    --line: #1e2635; --line-soft: #1a212e;
+    --text: #eef1f7; --muted: #8b93a6; --faint: #5b6474;
+    --blue: #2aabee; --blue-2: #229ed9; --blue-deep: #1c7fb0;
+    --red: #f0473e; --green: #35d07f;
+    --glow: rgba(42, 171, 238, .55);
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --ink: #f3f5f9; --surface: #ffffff; --surface-2: #f7f9fc;
+        --line: #e4e8f0; --line-soft: #eef1f6;
+        --text: #101521; --muted: #5c6675; --faint: #97a0b0;
+        --glow: rgba(34, 158, 217, .28);
+    }
+}
+.lg-page * { box-sizing: border-box; margin: 0; padding: 0; }
+.lg-page {
+    background: var(--ink); color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased; line-height: 1.5;
+    min-height: 100dvh; display: flex; flex-direction: column;
+    position: relative; overflow-x: hidden;
+}
+.lg-page::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--muted) 22%, transparent) 1px, transparent 0);
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(120% 80% at 50% -10%, #000 0%, transparent 72%);
+    mask-image: radial-gradient(120% 80% at 50% -10%, #000 0%, transparent 72%);
+    opacity: .5;
+}
+.lg-page::after {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+        radial-gradient(680px 380px at 50% -6%, var(--glow), transparent 70%),
+        radial-gradient(520px 320px at 88% 108%, color-mix(in srgb, var(--red) 30%, transparent), transparent 72%);
+    opacity: .8;
+}
+.wrap { position: relative; z-index: 1; width: 100%; max-width: 1080px; margin: 0 auto; padding: 32px 24px 40px; flex: 1; display: flex; flex-direction: column; }
+
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 11px; }
+.brand .mark { width: 30px; height: 30px; display: grid; place-items: center; }
+.brand .mark svg { width: 100%; height: 100%; filter: drop-shadow(0 2px 8px rgba(2, 136, 254, .35)); }
+.brand .name { font-weight: 680; font-size: 16px; letter-spacing: -.01em; }
+.brand .name b { color: var(--blue); font-weight: 680; }
+.chips { display: flex; gap: 8px; }
+.chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 11.5px; letter-spacing: .02em;
+    color: var(--muted); background: var(--surface); border: 1px solid var(--line);
+    padding: 6px 11px; border-radius: 8px;
+}
+.chip b { color: var(--text); font-weight: 600; }
+.chip .live { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 22%, transparent); }
+
+.hero { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 56px 0 40px; }
+.lg-page h1 {
+    margin-top: 22px; font-size: clamp(38px, 7vw, 76px); line-height: .98;
+    font-weight: 720; letter-spacing: -.03em; text-wrap: balance; max-width: 15ch;
+}
+.lg-page h1 .grad {
+    background: linear-gradient(115deg, var(--blue) 10%, var(--blue-deep) 55%, var(--red) 130%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.lede { margin-top: 22px; font-size: clamp(16px, 2vw, 19px); color: var(--muted); max-width: 56ch; }
+
+.actions { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+    display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+    font-size: 14.5px; font-weight: 600; padding: 12px 20px; border-radius: 11px;
+    transition: transform .12s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+}
+.btn svg { width: 16px; height: 16px; }
+.btn-primary { color: #fff; background: linear-gradient(135deg, var(--blue), var(--blue-2)); box-shadow: 0 8px 24px -8px var(--glow); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -10px var(--glow); }
+.btn-ghost { color: var(--text); background: var(--surface); border: 1px solid var(--line); }
+.btn-ghost:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--blue) 45%, var(--line)); }
+
+.grid { margin-top: 8px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 860px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .grid { grid-template-columns: 1fr; } .chips { display: none; } }
+.card {
+    position: relative; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 20px 18px; overflow: hidden;
+    transition: transform .15s ease, border-color .2s ease;
+}
+.card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--blue) 40%, var(--line)); }
+.card::before {
+    content: ""; position: absolute; top: 10px; right: 10px; width: 14px; height: 14px;
+    border-top: 1.5px solid color-mix(in srgb, var(--blue) 55%, transparent);
+    border-right: 1.5px solid color-mix(in srgb, var(--blue) 55%, transparent);
+    border-top-right-radius: 4px; opacity: .6;
+}
+.card .ic { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: color-mix(in srgb, var(--blue) 12%, transparent); color: var(--blue); margin-bottom: 14px; }
+.card .ic svg { width: 18px; height: 18px; }
+.card h3 { font-size: 15px; font-weight: 640; letter-spacing: -.01em; }
+.card p { margin-top: 6px; font-size: 13px; color: var(--muted); line-height: 1.45; }
+.card.red .ic { background: color-mix(in srgb, var(--red) 12%, transparent); color: var(--red); }
+.card.red::before { border-color: color-mix(in srgb, var(--red) 55%, transparent); }
+
+.lg-page footer { position: relative; z-index: 1; border-top: 1px solid var(--line-soft); margin-top: auto; }
+.foot { max-width: 1080px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--faint); }
+.foot a { color: var(--muted); text-decoration: none; }
+.foot a:hover { color: var(--blue); }
+.foot .dot { opacity: .4; }
+
+@media (prefers-reduced-motion: reduce) { .btn, .card { transition: none; } }
